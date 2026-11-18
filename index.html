@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#211a14">
+  <title>Fit Finder — Your Digital Wardrobe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="fitfinder.css">
+  <script src="fitfinder.js" defer></script>
+</head>
+<body>
+
+  <!-- Opening screen -->
+  <section class="intro" id="intro">
+    <div class="intro-shade"></div>
+    <div class="intro-content">
+      <div class="hanger-logo" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none">
+          <path d="M50 18 C50 7 67 7 67 20 C67 28 55 30 50 40 L16 60 C10 64 14 72 21 72 H79 C87 72 90 63 82 59 L50 40" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M40 52 V85 M40 52 H62 M40 67 H58" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p class="intro-kicker">YOUR PERSONAL STYLE SPACE</p>
+      <h1>Fit Finder</h1>
+      <p class="intro-subtitle">Your Digital Wardrobe</p>
+      <button class="enter-button" id="enter-button">
+        Enter Your Wardrobe <span>↗</span>
+      </button>
+      <span class="intro-bottom">A LITTLE MORE YOU, EVERY DAY</span>
+    </div>
+    <div class="intro-corner">FF <span>STUDIO</span></div>
+  </section>
+
+  <!-- Main application -->
+  <main id="app">
+    <header class="topbar">
+      <a class="brand" href="#home">
+        <span class="brand-icon">F</span>
+        <span>fit finder<small>your closet</small></span>
+      </a>
+      <nav>
+        <button data-go="wardrobe">My closet</button>
+        <button data-go="stylist">Outfit of the day</button>
+      </nav>
+      <button class="button button-dark top-add" id="open-add">＋ Add clothes</button>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="live-dot"></span> Your clothes</span>
+        <h2>What do you<br><em>want to wear?</em></h2>
+        <p>Pick a few pieces from your closet and find an outfit for today.</p>
+        <div class="hero-actions">
+          <button class="button button-light" data-go="stylist">Style my day <span>↗</span></button>
+          <button class="text-button" data-go="wardrobe">Explore my closet ↓</button>
+        </div>
+      </div>
+      <div class="floating-outfits" id="hero-bubbles" role="img" aria-label="A few pieces from your wardrobe"></div>
+      <div class="hero-foot">
+        <span>01 — PERSONAL STYLE</span>
+      </div>
+    </section>
+
+    <section class="stats-row">
+      <div class="stat"><span class="stat-icon">✳</span><div><strong id="item-count">0</strong><small>pieces in your closet</small></div></div>
+      <div class="stat"><span class="stat-icon">♡</span><div><strong id="favorite-count">0</strong><small>favourites</small></div></div>
+      <div class="stat stat-note"><span>Your clothes, in one place</span><strong>Wear your favourites again.</strong></div>
+    </section>
+
+    <section class="section wardrobe-section" id="wardrobe">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">In your closet</span>
+          <h2>Your closet<span class="heading-dot">.</span></h2>
+          <p>Everything you have added, all in one place.</p>
+        </div>
+        <button class="button button-dark" id="hero-add">＋ Add pieces</button>
+      </div>
+
+      <div class="toolbar">
+        <label class="search-box">
+          <span>⌕</span>
+          <input id="search" type="search" placeholder="Find a piece…">
+        </label>
+        <select id="category-filter" aria-label="Filter by category">
+          <option value="All">All categories</option>
+          <option value="Tops">Tops</option>
+          <option value="Bottoms">Bottoms</option>
+          <option value="Shoes">Shoes</option>
+          <option value="Outerwear">Outerwear</option>
+          <option value="Accessories">Accessories</option>
+        </select>
+        <label class="favorite-filter"><input id="favorites-only" type="checkbox"> ♡ Favourites</label>
+      </div>
+
+      <div class="wardrobe-grid" id="item-grid"></div>
+      <div class="wardrobe-bottom">
+        <span>YOUR CLOSET, YOUR RULES.</span>
+        <button class="text-button" id="upload-more">＋ Add more pieces</button>
+      </div>
+    </section>
+
+    <section class="stylist-section" id="stylist">
+      <div class="stylist-intro">
+        <span class="eyebrow">Outfit ideas</span>
+        <h2>What’s the plan<br><em>for today?</em></h2>
+        <p>Choose your plans and mood. Fit Finder will make an outfit from pieces you already own.</p>
+        <div class="stylist-scribble">made for your kind of day ↗</div>
+      </div>
+
+      <form class="stylist-form" id="outfit-form">
+        <label>01 <span>What are you up to?</span>
+          <select id="activity">
+            <option value="school">School / studying</option>
+            <option value="casual">Hanging out</option>
+            <option value="sport">Sports / activity</option>
+            <option value="party">Party / going out</option>
+            <option value="outdoor">Outdoors / exploring</option>
+            <option value="home">A day at home</option>
+          </select>
+        </label>
+        <label>02 <span>What’s the weather like?</span>
+          <select id="weather">
+            <option value="mild">Mild / comfortable</option>
+            <option value="hot">Hot and sunny</option>
+            <option value="cold">Cold</option>
+            <option value="rainy">Rainy</option>
+            <option value="windy">Windy</option>
+          </select>
+        </label>
+        <label>03 <span>What’s your vibe?</span>
+          <select id="style-mood">
+            <option value="comfy">Comfy and relaxed</option>
+            <option value="streetwear">Streetwear</option>
+            <option value="minimal">Clean and minimal</option>
+            <option value="playful">Playful and bold</option>
+          </select>
+        </label>
+        <button class="button button-light generate-button" type="submit">Find my outfit <span>✳</span></button>
+      </form>
+
+      <div class="outfit-result" id="outfit-result">
+        <div class="outfit-placeholder">
+          <span class="placeholder-star">✳</span>
+          <h3>Your next favourite fit?</h3>
+          <p>Pick your plans and let your closet surprise you.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <a class="brand footer-brand" href="#home"><span class="brand-icon">F</span><span>fit finder<small>YOUR STYLE SPACE</small></span></a>
+      <span>Made around the clothes you own.</span>
+      <div class="footer-actions">
+        <button class="text-button" id="manage-shop-links" type="button">Manage shop links ↗</button>
+        <button class="text-button" id="replay-intro" type="button">Replay opening ↗</button>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Add clothes dialog -->
+  <dialog id="add-dialog" class="modal">
+    <div class="modal-head">
+      <div><span class="eyebrow">GROW YOUR COLLECTION</span><h2>Add to your closet</h2></div>
+      <button class="icon-close" data-close="add-dialog" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-description">Add a whole batch of photos in one go. Each photo becomes its own wardrobe piece.</p>
+      <label class="upload-zone">
+        <input type="file" id="bulk-photos" accept="image/*" multiple>
+        <span class="upload-symbol">＋</span>
+        <strong>Drop your clothes in here</strong>
+        <span>or click to select multiple photos</span>
+        <small>JPG, PNG or WEBP · max 3 MB per photo</small>
+      </label>
+      <div class="bulk-preview" id="bulk-preview"></div>
+      <p class="muted" id="bulk-status"></p>
+      <label class="field-label">Category for these photos
+        <select id="bulk-category">
+          <option value="Auto">Guess from filename</option>
+          <option value="Tops">Tops</option>
+          <option value="Bottoms">Bottoms</option>
+          <option value="Shoes">Shoes</option>
+          <option value="Outerwear">Outerwear</option>
+          <option value="Accessories">Accessories</option>
+        </select>
+      </label>
+      <button class="button button-dark full-button" id="bulk-save" disabled>Add selected photos ↗</button>
+      <div class="divider-label"><span>OR ADD ONE PIECE WITH DETAILS</span></div>
+      <button class="text-button" id="show-single-form">Open detailed form ＋</button>
+      <form id="single-form" class="single-form" hidden>
+        <label class="field-label">Name<input id="single-name" required maxlength="70" placeholder="e.g. Favourite hoodie"></label>
+        <label class="field-label">Category
+          <select id="single-category">
+            <option>Tops</option><option>Bottoms</option><option>Shoes</option><option>Outerwear</option><option>Accessories</option>
+          </select>
+        </label>
+        <label class="field-label">Colour
+          <select id="single-color">
+            <option>Unknown</option><option>Black</option><option>White</option><option>Cream</option><option>Grey</option><option>Blue</option><option>Green</option><option>Pink</option><option>Red</option><option>Brown</option><option>Purple</option><option>Yellow</option><option>Orange</option><option>Multicolour</option>
+          </select>
+        </label>
+        <label class="field-label">Photo (optional)<input id="single-photo" type="file" accept="image/*"></label>
+        <label class="field-label">Notes (optional)<textarea id="single-notes" rows="2" placeholder="Fit, fabric, when you wear it…"></textarea></label>
+        <button class="button button-dark full-button" type="submit">Save piece</button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Details dialog -->
+  <dialog id="detail-dialog" class="modal detail-modal">
+    <div class="modal-head">
+      <div><span class="eyebrow">A PIECE OF YOUR STYLE</span><h2>Piece details</h2></div>
+      <button class="icon-close" data-close="detail-dialog" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body" id="detail-content"></div>
+  </dialog>
+
+  <!-- Custom confirmation, never the browser popup -->
+  <dialog id="confirm-dialog" class="modal confirm-modal">
+    <div class="confirm-mark">✳</div>
+    <h2>Are you sure?</h2>
+    <p id="confirm-text">Remove this item from your wardrobe?</p>
+    <div class="confirm-actions">
+      <button class="button button-outline" id="confirm-cancel">Keep it</button>
+      <button class="button button-dark" id="confirm-yes">Remove item</button>
+    </div>
+  </dialog>
+
+
+  <!-- Affiliate product links -->
+  <dialog id="shop-links-dialog" class="modal">
+    <div class="modal-head">
+      <div><span class="eyebrow">COMPLETE THE LOOK</span><h2>Manage shop links</h2></div>
+      <button class="icon-close" data-close="shop-links-dialog" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-description">Add products using affiliate URLs from a program you have joined. Only your own approved links will appear in outfit suggestions.</p>
+      <form id="shop-link-form">
+        <label class="field-label">Product name
+          <input id="shop-link-name" required maxlength="70" placeholder="e.g. Ribbed cardigan">
+        </label>
+        <label class="field-label">Category
+          <select id="shop-link-category">
+            <option value="Tops">Tops</option><option value="Bottoms">Bottoms</option><option value="Shoes">Shoes</option><option value="Outerwear">Outerwear</option><option value="Accessories">Accessories</option>
+          </select>
+        </label>
+        <label class="field-label">Approved affiliate URL
+          <input id="shop-link-url" type="url" inputmode="url" required maxlength="2000" placeholder="https://…">
+        </label>
+        <p class="muted">These links are saved in this browser. A public version of the app would need shared configuration or a backend for every visitor to see the same links.</p>
+        <button class="button button-dark full-button" type="submit">Save shop link</button>
+      </form>
+      <div class="shop-link-list" id="shop-link-list" aria-live="polite"></div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
